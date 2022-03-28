@@ -22,7 +22,7 @@ public class File_Reader {
 			
 			String url = "jdbc:mysql://localhost:3306/excelReader";
 			String user = "vahoertnagl";
-			String pass = "ahoi12345"; //pass ist gewollt leer
+			String pass = ""; //pass ist gewollt leer
 
 			Connection c = getConnection(url, user, pass);
 
