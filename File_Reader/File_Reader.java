@@ -3,7 +3,6 @@ package File_import_export;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.sql.*;
-import java.time.LocalDate;
 import java.util.Scanner;
 
 public class File_Reader {
@@ -28,15 +27,14 @@ public class File_Reader {
 
 			File f = new File("/home/hoertnagl/eclipse-workspace/INFI_csv/test_1.csv");
 			Scanner s = new Scanner(f);
-			String[] str = new String[3]; // 3 == Anzahl der Spalten
 			String string = ""; //Zwischenspeicher für String
 			
 			CreateTable_InsertInto.createTable(c, "excelReader");
 
 			while (s.hasNextLine()) {
 				string = s.nextLine();
-				str = string.split(",");
-				CreateTable_InsertInto.insertInto(c, "excelReader", str[0], str[1], str[2], LocalDate.now());
+				String[] str = string.split(",");
+				CreateTable_InsertInto.insertInto(c, "excelReader", str[0], str[1], str[2], str[3]);
 			}
 			
 			s.close();
