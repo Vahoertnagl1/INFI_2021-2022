@@ -1,11 +1,11 @@
-package File_import_export;
+package File_Reader;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.sql.*;
 import java.util.Scanner;
 
-public class File_Reader {
+public class File_Reader_Schueler {
 
 	static Connection getConnection(String url, String user, String pass) {
 		try {
@@ -25,19 +25,34 @@ public class File_Reader {
 
 			Connection c = getConnection(url, user, pass);
 
-			File f = new File("/home/hoertnagl/eclipse-workspace/INFI_csv/test_1.csv");
-			Scanner s = new Scanner(f);
+			File schueler = new File("/home/hoertnagl/eclipse-workspace/INFI_csv/schueler.csv");
+			File klassen = new File("/home/hoertnagl/eclipse-workspace/INFI_csv/klassen.csv");
+			Scanner s = new Scanner(schueler);
 			String string = ""; //Zwischenspeicher für String
 			
-			CreateTable_InsertInto.createTable(c, "excelReader");
+			Schueler.createTable(c, "schueler");
+			Klassen.createTable(c, "klassen");
 
 			while (s.hasNextLine()) {
 				string = s.nextLine();
 				String[] str = string.split(",");
-				CreateTable_InsertInto.insertInto(c, "excelReader", str[0], str[1], str[2], str[3]);
+				Schueler.insertInto(c, "schueler", str[0], str[1], str[2], str[3], str[4]);
 			}
 			
 			s.close();
+			Scanner s2 = new Scanner(klassen);
+			String string2 = ""; //Zwischenspeicher für String
+			
+			while (s2.hasNextLine()) {
+				string2 = s2.nextLine();
+				String[] str = string2.split(",");
+				Klassen.insertInto(c, "klassen", str[0], str[1]);
+			}
+			
+			Schueler.showSchueler(c, "schueler");
+			Klassen.showKlassen(c, "klassen");
+			
+			s2.close();
 			c.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
